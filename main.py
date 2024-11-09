@@ -13,5 +13,8 @@ def up_square(n):
         return n**2
     return n
 
-numbers_square = [up_square(n) for n in numbers if n >= 5]
+def check_n(n):
+    return n >= 5
+
+numbers_square = [up_square(n) for n in numbers if check_n(n)]
 print('after', numbers_square)
