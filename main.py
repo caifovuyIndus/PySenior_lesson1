@@ -11,4 +11,7 @@ if data_site.status_code == 200:
     soup_list = soup.find_all('div', {'class': 'sc-b3fc6b7-0 dzgUIj'})
 
     for block in soup_list:
-        print('parse result', block)
+        rate = block.findNext().text[1:].replace(',','')
+        print('parse result', rate, type(rate))
+
+
