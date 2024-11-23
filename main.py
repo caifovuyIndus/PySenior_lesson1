@@ -9,9 +9,10 @@ image = cv2.imread(image_path)
 
 
 cat_face_data = handle_cat_face.detectMultiScale(image)
-print(cat_face_data)
+# print(cat_face_data)
 
-
+for (x, y, w, h) in cat_face_data:
+    cv2.rectangle(image, (x, y), (x+w, y+h), (0, 0, 255), 3)
 
 cv2.imshow('cat',image)
 cv2.waitKey()
