@@ -1,3 +1,5 @@
+import inspect
+
 class Person:
     name: str
     surname: str
@@ -9,7 +11,7 @@ class Person:
         self.age = age
 
     def info_person(self):
-        print(f'Особистість:	{self.name} | {self.surname} | {self.age}')
+        print(f'Особистість: {self.name} | {self.surname} | {self.age}')
 
 class Teacher(Person):
     subject: str
@@ -21,7 +23,7 @@ class Teacher(Person):
         Person.__init__(self, name=name, surname=surname, age=age)
 
     def info_teacher(self):
-        print(f'Вчитель:	{self.subject} | {self.hours}')
+        print(f'Вчитель: {self.subject} | {self.hours}')
 
     def info_all(self):
         self.info_person()
@@ -38,7 +40,7 @@ class Group:
         self.age_category = age_category
 
     def info_group(self):
-        print(f'Група:	{self.name} | Студенти: {self.student_count} | Вікова категорія: {self.age_category}')
+        print(f'Група: {self.name} | Студенти: {self.student_count} | Вікова категорія: {self.age_category}')
 
 class Student(Person):
     progress: float
@@ -54,7 +56,7 @@ class Student(Person):
         self.pensione = value >= 60
 
     def info_student(self):
-        print(f'Студент:	Успішність: {self.progress}')
+        print(f'Студент: Успішність: {self.progress}')
         self.group.info_group()
 
     def info_all(self):
@@ -75,18 +77,20 @@ class Worker(Person):
         self.pensione = value >= 60
 
     def info_worker(self):
-        print(f'Працівник:	Посада: {self.position} | Обов’язки: {self.duties}')
+        print(f'Працівник: Посада: {self.position} | Обов’язки: {self.duties}')
 
     def info_all(self):
         self.info_person()
         self.info_worker()
 
-teacher = Teacher(subject='Pycharm', hours=24, name='unknown_name', surname='unknown_surname', age=30)
-teacher.info_all()
+# Інтроспекція
+classes = [Student, Worker, Teacher, Person]
 
-student_group = Group(name='Python Developers', student_count=15, age_category='20-25')
-student = Student(name='Student_Name', surname='Student_Surname', age=22, progress=4.5, group=student_group)
-student.info_all()
+for cls in classes:
+    print(f'Клас: {cls.__name__}')
+    attributes = [name for name, value in inspect.getmembers(cls) if not callable(value) and not name.startswith("__")]
+    methods = [name for name, value in inspect.getmembers(cls) if callable(value) and not name.startswith("__")]
 
-worker = Worker(name='Worker_Name', surname='Worker_Surname', age=45, position='Manager', duties='Manage team')
-worker.info_all()
+    print("Атрибути:", attributes)
+    print("Методи:", methods)
+    print("-")
